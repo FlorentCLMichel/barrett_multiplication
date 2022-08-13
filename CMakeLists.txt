@@ -3,7 +3,9 @@ project(barrett_multiplication VERSION 0.1.0 DESCRIPTION "A simple implementatio
 
 option(BUILD_DYNAMIC "build a dynamic version of the library instead of a static one" OFF)
 option(BUILD_EXAMPLES "build the examples" OFF)
+option(BUILD_TESTS "build the tests" OFF)
 
+set(CMAKE_CXX_FLAGS "-O2")
 
 # build the main library
 
@@ -39,6 +41,22 @@ if (BUILD_EXAMPLES)
         set_target_properties(${example_name} PROPERTIES RUNTIME_OUTPUT_DIRECTORY "examples")
         target_link_libraries(${example_name} PRIVATE barrett_mul)
         target_include_directories(${example_name} PRIVATE src/include)
-    endforeach( file ${EXAMPLES} )
+    endforeach(file ${EXAMPLES} )
 else ()
 endif(BUILD_EXAMPLES)
+
+
+# build the tests
+
+if (BUILD_TESTS)
+    file(GLOB EXAMPLES src/tests/*.cpp)
+    foreach(file ${EXAMPLES} )
+        get_filename_component(example_name ${file} NAME_WE)
+        add_executable(${example_name} ${file})
+        set_property(TARGET ${example_name} PROPERTY CXX_STANDARD 20)
+        set_target_properties(${example_name} PROPERTIES RUNTIME_OUTPUT_DIRECTORY "tests")
+        target_link_libraries(${example_name} PRIVATE barrett_mul)
+        target_include_directories(${example_name} PRIVATE src/include)
+    endforeach(file ${EXAMPLES} )
+else ()
+endif(BUILD_TESTS)

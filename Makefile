@@ -19,6 +19,13 @@ examples:
 		cmake .. -DBUILD_EXAMPLES=ON; \
 		make
 
+.PHONY: tests
+tests: 
+	mkdir -p build
+	cd build; \
+		cmake .. -DBUILD_TESTS=ON; \
+		make
+
 .PHONY: doc
 doc:
 	doxygen doxygen_format.txt

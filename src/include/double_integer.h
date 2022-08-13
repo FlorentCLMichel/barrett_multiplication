@@ -8,7 +8,10 @@
 
 #include "unsigned_integer_concept.h"
 
-/// A partial implementation of double-size unsigned integers
+/** 
+ * A partial implementation of double-size unsigned integers
+ * @tparam U unsigned integer type to work with
+ */
 template<UnsignedInteger U>
 class DoubleInteger {
     public:
@@ -19,12 +22,21 @@ class DoubleInteger {
         /// least significant bits
         U lsb;
 
+        DoubleInteger();
+
         /**
          * @brief Constructor from two single-size integers.
          * @param msb most significant bits
          * @param lsb least significant bits
          */
-        DoubleInteger(const U& msb, const U& lsb);
+        DoubleInteger(const U msb, const U lsb);
+
+        /**
+         * @brief Builds a new double-size integer.
+         * @param msb most significant bits
+         * @param lsb least significant bits
+         */
+        const DoubleInteger<U> make_new(const U msb, const U lsb);
 
         /**
          * @brief addition
@@ -72,5 +84,8 @@ DoubleInteger<U> mul(U& a, U& b);
 
 /// Implementations for the usual types
 template class DoubleInteger<unsigned char>;
+template class DoubleInteger<unsigned int>;
+template class DoubleInteger<unsigned long>;
+template class DoubleInteger<unsigned long long>;
 
 #endif
