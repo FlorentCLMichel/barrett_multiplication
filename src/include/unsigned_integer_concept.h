@@ -13,23 +13,29 @@
  *  A concept for data typs which may be used as unsigned integers. 
  *
  *  They must implement
- *  * addition
- *  * subtraction
- *  * multiplication
- *  * left bit shift
- *  * right bit shift
+ *  * addition, subtraction, and multiplication
+ *  * the bit-wise operations `!`, `&`, `|`, and `^`
+ *  * left and right bit shift
  *  * the comparison operator `<`
+ *  * conversion from an `unsigned char`
  */
 template<typename T>
 concept UnsignedInteger = requires(T a, T b) {
     { a + b } -> std::convertible_to<T>; 
     { a - b } -> std::convertible_to<T>;
     { a * b } -> std::convertible_to<T>;
+    { !a } -> std::convertible_to<T>;
+    { a & b } -> std::convertible_to<T>;
+    { a | b } -> std::convertible_to<T>;
+    { a ^ b } -> std::convertible_to<T>;
     { a << b } -> std::convertible_to<T>; 
     { a >> b } -> std::convertible_to<T>; 
     a += b; 
     a -= b; 
     a *= b;
+    a &= b;
+    a |= b;
+    a ^= b;
     a <<= b;
     a >>= b;
     { a < b } -> std::convertible_to<bool>;
