@@ -15,6 +15,7 @@ int main() {
     assert(x == 0);
 
     // run the test
+    std::cout << "Running test ADD_DOUBLE_U8... " << std::flush;
     unsigned char i = 0;
     do {
         unsigned char j = 0;
@@ -31,7 +32,7 @@ int main() {
                         DoubleInteger<unsigned char> c = a + b;
                         unsigned int c_int = ((unsigned int) c.msb) * 256 + ((unsigned int) c.lsb);
                         if (a_int + b_int != c_int) {
-                            std::cout << "TEST ADD_DOUBLE_U8 FAILED: " 
+                            std::cout << "FAILED: " 
                                       << a_int << " + " << b_int << " != " << c_int 
                                       << std::endl;
                             return 1;
@@ -45,6 +46,6 @@ int main() {
         } while (j > 0);
         ++i;
     } while (i > 0);
-    std::cout << "TEST ADD_DOUBLE_U8 PASSED" << std::endl;
+    std::cout << "PASSED" << std::endl;
     return 0;
 }

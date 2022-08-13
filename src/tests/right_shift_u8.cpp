@@ -15,6 +15,7 @@ int main() {
     assert(x == 0);
 
     // run the test
+    std::cout << "Running test RIGHT_SHIFT_U8... " << std::flush;
     unsigned char i = 0;
     do {
         unsigned char j = 0;
@@ -25,7 +26,7 @@ int main() {
                 DoubleInteger<unsigned char> x_shifted = x >> k;
                 unsigned int x_shifted_int = ((unsigned int) x_shifted.msb) * 256 + ((unsigned int) x_shifted.lsb);
                 if (x_shifted_int != x_int >> k) {
-                    std::cout << "TEST RIGHT_SHIFT_U8 FAILED: " 
+                    std::cout << "FAILED: " 
                               << x_int << " >> " << (unsigned int) k << " != " << x_shifted_int
                               << std::endl;
                     return 1;
@@ -35,6 +36,6 @@ int main() {
         } while (j > 0);
         ++i;
     } while (i > 0);
-    std::cout << "TEST RIGHT_SHIFT_U8 PASSED" << std::endl;
+    std::cout << "PASSED" << std::endl;
     return 0;
 }

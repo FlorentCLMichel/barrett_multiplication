@@ -26,6 +26,11 @@ tests:
 		cmake .. -DBUILD_TESTS=ON; \
 		make
 
+run_tests: tests ./build/tests/*
+	for file in $^ ; do \
+		./$${file} ; \
+	done
+
 .PHONY: doc
 doc:
 	doxygen doxygen_format.txt
