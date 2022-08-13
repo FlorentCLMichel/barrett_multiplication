@@ -6,6 +6,7 @@
  * @brief definition of the `UnsignedInteger` concept
  */
 
+#include<climits>
 #include<concepts>
 
 /**
@@ -19,8 +20,18 @@
  *  * right bit shift
  */
 template<typename T>
-concept UnsignedInteger = requires(T x) {
-    { std::operator+(const T y) } -> std::convertible_to<T>;
-};
+concept UnsignedInteger = requires(T a, T b) {
+    { a + b } -> std::convertible_to<T>; 
+    { a - b } -> std::convertible_to<T>;
+    { a * b } -> std::convertible_to<T>;
+    { a << b } -> std::convertible_to<T>; 
+    { a >> b } -> std::convertible_to<T>; 
+    a += b; 
+    a -= b; 
+    a *= b;
+    a <<= b;
+    a >>= b;
+    { sizeof(a) } -> std::convertible_to<unsigned int>;
+} && std::convertible_to<unsigned char, T>;
 
 #endif
