@@ -20,7 +20,7 @@ DoubleInteger<U>::DoubleInteger(const U msb, const U lsb): msb(msb), lsb(lsb)
 
 
 template<UnsignedInteger U>
-const DoubleInteger<U> DoubleInteger<U>::make_new(const U new_msb, const U new_lsb)
+DoubleInteger<U> DoubleInteger<U>::make_new(const U new_msb, const U new_lsb) const
 {
     DoubleInteger<U> other;
     other.msb = new_msb;
@@ -38,7 +38,7 @@ const DoubleInteger<U> DoubleInteger<U>::make_new(const U new_msb, const U new_l
 
 
 template<UnsignedInteger U>
-const DoubleInteger<U> DoubleInteger<U>::operator+(const DoubleInteger<U>& other) {
+DoubleInteger<U> DoubleInteger<U>::operator+(const DoubleInteger<U>& other) const {
     U new_lsb = (lsb & mask_low_bits_u) + (other.lsb & mask_low_bits_u);
     U new_msb = msb + other.msb;
     U carries = ((lsb & mask_highest_bit_u) >> n_bits_u_minus_1)
@@ -57,7 +57,7 @@ const DoubleInteger<U> DoubleInteger<U>::operator+(const DoubleInteger<U>& other
 
 
 template<UnsignedInteger U>
-const DoubleInteger<U> DoubleInteger<U>::operator-(const DoubleInteger<U>& other) {
+DoubleInteger<U> DoubleInteger<U>::operator-(const DoubleInteger<U>& other) const {
 
     // version assuming two's complement
     return make_new(
@@ -78,3 +78,28 @@ const DoubleInteger<U> DoubleInteger<U>::operator-(const DoubleInteger<U>& other
     //     );
     // }
 }
+
+
+template<UnsignedInteger U>
+DoubleInteger<U> mul(U& a, U& b) {
+    const U one = 1;
+    const U half_n_bits = (sizeof(U) * CHAR_BIT) >> 1;
+    const U full_mask = ~((U) 0);
+    const U lsb_mask = full_mask >> half_n_bits;
+    const U msb_1 = a >> half_n_bits;
+    const U msb_2 = b >> half_n_bits;
+    const U lsb_1 = a & lsb_mask;
+    const U lsb_2 = b & lsb_mask;
+    const U coeff_0 = lsb_1 * lsb_2;
+    const U x = lsb_1 * msb_2;
+    const U y = lsb_2 * msb_1;
+    const U coeff_1 = (x & lsb_mask) + (y & lsb_mask);
+    const U coeff_2 = msb_1 * msb_2 + (x >> half_n_bits) + (y >> half_n_bits);
+    const DoubleInteger<U> a1 = DoubleInteger<U>(coeff_2, coeff_0);
+    const DoubleInteger<U> a2 = a1.make_new(coeff_1 >> half_n_bits, (coeff_1 & lsb_mask) << half_n_bits);
+    return a1 + a2;
+}
+
+
+// Implementations of mul for the usual types
+template DoubleInteger<unsigned char> mul(unsigned char&, unsigned char&);

@@ -36,31 +36,31 @@ class DoubleInteger {
          * @param msb most significant bits
          * @param lsb least significant bits
          */
-        const DoubleInteger<U> make_new(const U msb, const U lsb);
+        DoubleInteger<U> make_new(const U msb, const U lsb) const;
 
         /**
          * @brief addition
          *
          * We assume the result does not overflow.
          */
-        const DoubleInteger<U> operator+(const DoubleInteger<U>& other);
+        DoubleInteger<U> operator+(const DoubleInteger<U>& other) const;
         
         /**
          * @brief subtraction
          *
          * We assume the result is non-negative.
          */
-        const DoubleInteger<U> operator-(const DoubleInteger<U>& other);
+        DoubleInteger<U> operator-(const DoubleInteger<U>& other) const;
         
         /**
          * @brief right bit shifting
          */
-        const DoubleInteger<U> operator>>(const U& n);
+        DoubleInteger<U> operator>>(const U& n) const;
         
         /**
          * @brief left bit shifting
          */
-        const DoubleInteger<U> operator<<(const U& n);
+        DoubleInteger<U> operator<<(const U& n) const;
 
     private: 
         U zero;
@@ -82,7 +82,7 @@ template<UnsignedInteger U>
 DoubleInteger<U> mul(U& a, U& b);
 
 
-/// Implementations for the usual types
+/// Implementations of the DoubleInteger class for the usual types
 template class DoubleInteger<unsigned char>;
 template class DoubleInteger<unsigned int>;
 template class DoubleInteger<unsigned long>;
