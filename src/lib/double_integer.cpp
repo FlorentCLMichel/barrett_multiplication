@@ -103,3 +103,6 @@ DoubleInteger<U> mul(U& a, U& b) {
 
 // Implementations of mul for the usual types
 template DoubleInteger<unsigned char> mul(unsigned char&, unsigned char&);
+template DoubleInteger<unsigned int> mul(unsigned int&, unsigned int&);
+template DoubleInteger<unsigned long> mul(unsigned long&, unsigned long&);
+template DoubleInteger<unsigned long long> mul(unsigned long long&, unsigned long long&);
