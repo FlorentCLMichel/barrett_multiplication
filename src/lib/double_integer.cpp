@@ -78,6 +78,19 @@ DoubleInteger<U> DoubleInteger<U>::operator-(const DoubleInteger<U>& other) cons
     //     );
     // }
 }
+        
+
+template <UnsignedInteger U>
+DoubleInteger<U> DoubleInteger<U>::operator>>(const U& n) const {
+    if (n >= n_bits_u) {
+        return make_new(zero, msb >> (n - n_bits_u));
+    }
+    const U rem_bits = n_bits_u - n;
+    const U mask_msb_to_lsb = (one << n) - one;
+    const U new_lsb = (lsb >> n) + ((msb & mask_msb_to_lsb) << rem_bits);
+    const U new_msb = msb >> n;
+    return make_new(new_msb, new_lsb);
+}
 
 
 template<UnsignedInteger U>
