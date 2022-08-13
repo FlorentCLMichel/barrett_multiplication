@@ -91,6 +91,20 @@ DoubleInteger<U> DoubleInteger<U>::operator>>(const U& n) const {
     const U new_msb = msb >> n;
     return make_new(new_msb, new_lsb);
 }
+        
+
+template <UnsignedInteger U>
+DoubleInteger<U> DoubleInteger<U>::operator<<(const U& n) const {
+    if (n >= n_bits_u) {
+        return make_new(lsb << (n - n_bits_u), zero);
+    }
+    U new_msb = msb << n;
+    const U rem_bits = n_bits_u - n;
+    const U mask_lsb_to_msb = ~((one << rem_bits) - one);
+    new_msb += (lsb & mask_lsb_to_msb) >> rem_bits;
+    const U new_lsb = (lsb & ~mask_lsb_to_msb) << n;
+    return make_new(new_msb, new_lsb);
+}
 
 
 template<UnsignedInteger U>
