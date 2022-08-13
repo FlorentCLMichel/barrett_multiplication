@@ -67,6 +67,16 @@ class DoubleInteger {
          */
         DoubleInteger<U> div_by_u(U& q) const;
 
+        /**
+         * @brief subtraction, retaining only the lsb
+         */
+        U sub_lsb(DoubleInteger<U>& other) const;
+        
+        /**
+         * @right shift, retaining only the lsb
+         */
+        U shift_right_lsb(U& n) const;
+
     private: 
         U zero;
         U one;
