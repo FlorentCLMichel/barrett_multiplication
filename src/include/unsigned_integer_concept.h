@@ -18,6 +18,7 @@
  *  * multiplication
  *  * left bit shift
  *  * right bit shift
+ *  * the comparison operator `<`
  */
 template<typename T>
 concept UnsignedInteger = requires(T a, T b) {
@@ -31,6 +32,7 @@ concept UnsignedInteger = requires(T a, T b) {
     a *= b;
     a <<= b;
     a >>= b;
+    { a < b } -> std::convertible_to<bool>;
     { sizeof(a) } -> std::convertible_to<unsigned int>;
 } && std::convertible_to<unsigned char, T>;
 
