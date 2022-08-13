@@ -37,7 +37,25 @@ const DoubleInteger<U> DoubleInteger<U>::make_new(const U new_msb, const U new_l
 }
 
 
-#include <iostream>
+template<UnsignedInteger U>
+const DoubleInteger<U> DoubleInteger<U>::operator+(const DoubleInteger<U>& other) {
+    U new_lsb = (lsb & mask_low_bits_u) + (other.lsb & mask_low_bits_u);
+    U new_msb = msb + other.msb;
+    U carries = ((lsb & mask_highest_bit_u) >> n_bits_u_minus_1)
+                + ((other.lsb & mask_highest_bit_u) >> n_bits_u_minus_1)
+                + ((new_lsb & mask_highest_bit_u) >> n_bits_u_minus_1);
+    if (carries & one == one) {
+        new_lsb |= mask_highest_bit_u;
+    } else {
+        new_lsb &= mask_low_bits_u;
+    }
+    if (zero < carries >> one) {
+        new_msb += one;
+    }
+    return make_new(new_msb, new_lsb);
+}
+
+
 template<UnsignedInteger U>
 const DoubleInteger<U> DoubleInteger<U>::operator-(const DoubleInteger<U>& other) {
 
