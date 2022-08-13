@@ -7,23 +7,17 @@ option(BUILD_EXAMPLES "build the examples" OFF)
 
 # build the main library
 
+aux_source_directory(src/lib/ SRC_LIB)
 if (BUILD_DYNAMIC)
-    add_library(
-        barrett_mul SHARED
-        src/lib/hello_world.cpp
-    )
+    add_library(barrett_mul SHARED ${SRC_LIB})
 else ()
-    add_library(
-        barrett_mul STATIC
-        src/lib/hello_world.cpp
-    )
+    add_library(barrett_mul STATIC ${SRC_LIB})
 endif (BUILD_DYNAMIC)
 
 set_property(TARGET barrett_mul PROPERTY CXX_STANDARD 20)
 set_target_properties(barrett_mul PROPERTIES VERSION ${PROJECT_VERSION})
 set_target_properties(barrett_mul PROPERTIES PUBLIC_HEADER src/include/barrett_mul.h)
 target_include_directories(barrett_mul PRIVATE src/include)
-target_include_directories(barrett_mul PRIVATE src/lib)
 
 include(GNUInstallDirs)
 
@@ -44,6 +38,7 @@ if (BUILD_EXAMPLES)
         set_property(TARGET ${example_name} PROPERTY CXX_STANDARD 20)
         set_target_properties(${example_name} PROPERTIES RUNTIME_OUTPUT_DIRECTORY "examples")
         target_link_libraries(${example_name} PRIVATE barrett_mul)
+        target_include_directories(${example_name} PRIVATE src/include)
     endforeach( file ${EXAMPLES} )
 else ()
 endif(BUILD_EXAMPLES)

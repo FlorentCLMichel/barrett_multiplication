@@ -3,7 +3,7 @@
  * @brief A simple example showing how to use the #UnsignedInteger concept
  */
 
-#include "../src/include/barrett_mul.h"
+#include "barrett_mul.h"
 #include <vector>
 #include <iostream>
 

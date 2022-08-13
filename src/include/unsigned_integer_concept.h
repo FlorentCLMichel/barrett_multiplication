@@ -1,5 +1,5 @@
 #ifndef __UNSIGNED_INTEGERS_CONCEPT_H_
-#define __UNSIGNED_INTEGERS_CONCEPT__h
+#define __UNSIGNED_INTEGERS_CONCEPT_H_
  
 /** 
  * @file
