@@ -7,7 +7,7 @@ DoubleInteger<U>::DoubleInteger() {}
 
 
 template<UnsignedInteger U>
-DoubleInteger<U>::DoubleInteger(const U msb, const U lsb): msb(msb), lsb(lsb)
+DoubleInteger<U>::DoubleInteger(const U& msb, const U& lsb): msb(msb), lsb(lsb)
 {
     zero = (U) 0;
     one = (U) 1;
@@ -20,7 +20,7 @@ DoubleInteger<U>::DoubleInteger(const U msb, const U lsb): msb(msb), lsb(lsb)
 
 
 template<UnsignedInteger U>
-DoubleInteger<U> DoubleInteger<U>::make_new(const U new_msb, const U new_lsb) const
+DoubleInteger<U> DoubleInteger<U>::make_new(const U& new_msb, const U& new_lsb) const
 {
     DoubleInteger<U> other;
     other.msb = new_msb;

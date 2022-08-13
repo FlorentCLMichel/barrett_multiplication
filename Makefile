@@ -26,8 +26,8 @@ tests:
 		cmake .. -DBUILD_TESTS=ON; \
 		make
 
-run_tests: tests ./build/tests/*
-	for file in $^ ; do \
+run_tests: tests
+	for file in ./build/tests/* ; do \
 		./$${file} ; \
 	done
 

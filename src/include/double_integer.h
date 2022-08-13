@@ -29,14 +29,14 @@ class DoubleInteger {
          * @param msb most significant bits
          * @param lsb least significant bits
          */
-        DoubleInteger(const U msb, const U lsb);
+        DoubleInteger(const U& msb, const U& lsb);
 
         /**
          * @brief Builds a new double-size integer.
          * @param msb most significant bits
          * @param lsb least significant bits
          */
-        DoubleInteger<U> make_new(const U msb, const U lsb) const;
+        DoubleInteger<U> make_new(const U& msb, const U& lsb) const;
 
         /**
          * @brief addition
@@ -61,6 +61,11 @@ class DoubleInteger {
          * @brief left bit shifting
          */
         DoubleInteger<U> operator<<(const U& n) const;
+
+        /**
+         * @brief division by a single-size integer
+         */
+        DoubleInteger<U> div_by_u(U& q) const;
 
     private: 
         U zero;
