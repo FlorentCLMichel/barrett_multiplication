@@ -61,6 +61,11 @@ class DoubleInteger {
          * @brief left bit shifting
          */
         DoubleInteger<U> operator<<(const U& n) const;
+        
+        /**
+         * @brief smaller than or equal to comparison operator
+         */
+        bool operator<=(const DoubleInteger<U>& other) const;
 
         /**
          * @brief division by a single-size integer
@@ -79,6 +84,13 @@ class DoubleInteger {
          */
         U shift_right_lsb(U& n) const;
 
+        /**
+         * Generate a #DoubleInteger by multiplying two single-size integers
+         * @param a left multiplicant
+         * @param b right multiplicant
+         */
+        static DoubleInteger<U> mul(U& a, U& b);
+
     private: 
         U zero;
         U one;
@@ -88,15 +100,6 @@ class DoubleInteger {
         U mask_highest_bit_u;
         U mask_low_bits_u;
 };
-
-
-/**
- * Generate a #DoubleInteger by multiplying two single-size integers
- * @param a left multiplicant
- * @param b right multiplicant
- */
-template<UnsignedInteger U>
-DoubleInteger<U> mul(U& a, U& b);
 
 
 /// Implementations of the DoubleInteger class for the usual types

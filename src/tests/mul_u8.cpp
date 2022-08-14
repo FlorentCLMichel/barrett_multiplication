@@ -20,7 +20,7 @@ int main() {
     do {
         unsigned char j = 0;
         do {
-            DoubleInteger<unsigned char> x = mul(i, j);
+            DoubleInteger<unsigned char> x = DoubleInteger<unsigned char>::mul(i, j);
             unsigned int x_int = ((unsigned int) x.msb) * 256 + ((unsigned int) x.lsb);
             if (x_int != ((unsigned int) i) * ((unsigned int) j)) {
                 std::cout << "FAILED: " 

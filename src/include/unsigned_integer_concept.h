@@ -16,7 +16,7 @@
  *  * addition, subtraction, and multiplication
  *  * the bit-wise operations `!`, `&`, `|`, and `^`
  *  * left and right bit shift
- *  * the comparison operator `<`
+ *  * the comparison operators `<`, `<=`, and `==`
  *  * conversion from an `unsigned char` or a `bool`
  */
 template<typename T>
@@ -39,6 +39,8 @@ concept UnsignedInteger = requires(T a, T b) {
     a <<= b;
     a >>= b;
     { a < b } -> std::convertible_to<bool>;
+    { a <= b } -> std::convertible_to<bool>;
+    { a == b } -> std::convertible_to<bool>;
     { sizeof(a) } -> std::convertible_to<unsigned int>;
 } && std::convertible_to<unsigned char, T> && std::convertible_to<bool, T>;
 

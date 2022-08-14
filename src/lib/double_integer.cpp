@@ -105,6 +105,40 @@ DoubleInteger<U> DoubleInteger<U>::operator<<(const U& n) const {
     const U new_lsb = (lsb & ~mask_lsb_to_msb) << n;
     return make_new(new_msb, new_lsb);
 }
+        
+
+template<UnsignedInteger U>
+bool DoubleInteger<U>::operator<=(const DoubleInteger<U>& other) const {
+    return (msb < other.msb) || ((msb == other.msb) && (lsb <= other.lsb));
+}
+
+        
+template<UnsignedInteger U>
+DoubleInteger<U> DoubleInteger<U>::div_by_u(U& q) const {
+    U zero = 0;
+    U one = 1;
+    
+    if (q == one) { return *this; }
+
+    const U new_msb = msb / q;
+    const U ten_over_q = 
+    ((~zero % q) != q - one) ?
+        ~zero / q
+        : (~zero / q) + one;
+    U new_lsb = lsb / q + (msb % q) * ten_over_q;
+    U to_add = one << ((unsigned char) (sizeof(U) * CHAR_BIT) - one);
+    U next_lsb = new_lsb + to_add;
+    while (zero < to_add) {
+        while ((new_lsb < (~zero - to_add))
+            && ((DoubleInteger<U>::mul(next_lsb, q) + make_new(new_msb * q, zero)) <= *this))
+        {
+            new_lsb = next_lsb;
+            next_lsb += to_add;
+        }
+        to_add >>= one;
+    }
+    return make_new(new_msb, new_lsb);
+}
 
 
 template<UnsignedInteger U>
@@ -126,7 +160,7 @@ U DoubleInteger<U>::shift_right_lsb(U& n) const {
 
 
 template<UnsignedInteger U>
-DoubleInteger<U> mul(U& a, U& b) {
+DoubleInteger<U> DoubleInteger<U>::mul(U& a, U& b) {
     const U one = 1;
     const U half_n_bits = (sizeof(U) * CHAR_BIT) >> 1;
     const U full_mask = ~((U) 0);
@@ -144,10 +178,3 @@ DoubleInteger<U> mul(U& a, U& b) {
     const DoubleInteger<U> a2 = a1.make_new(coeff_1 >> half_n_bits, (coeff_1 & lsb_mask) << half_n_bits);
     return a1 + a2;
 }
-
-
-// Implementations of mul for the usual types
-template DoubleInteger<unsigned char> mul(unsigned char&, unsigned char&);
-template DoubleInteger<unsigned int> mul(unsigned int&, unsigned int&);
-template DoubleInteger<unsigned long> mul(unsigned long&, unsigned long&);
-template DoubleInteger<unsigned long long> mul(unsigned long long&, unsigned long long&);
