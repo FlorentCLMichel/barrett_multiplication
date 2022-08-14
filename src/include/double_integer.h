@@ -72,7 +72,7 @@ class DoubleInteger {
          *
          * This function is not optimized, and assumed to be called very infrequently.
          */
-        DoubleInteger<U> div_by_u(U& q) const;
+        DoubleInteger<U> div_by_u(const U& q) const;
 
         /**
          * @brief subtraction, retaining only the lsb
@@ -89,7 +89,7 @@ class DoubleInteger {
          * @param a left multiplicant
          * @param b right multiplicant
          */
-        static DoubleInteger<U> mul(U& a, U& b);
+        static DoubleInteger<U> mul(const U& a, const U& b);
 
     private: 
         U zero;
@@ -102,7 +102,7 @@ class DoubleInteger {
 };
 
 
-/// Implementations of the DoubleInteger class for the usual types
+/// Implementations of the `DoubleInteger` class for the usual types
 template class DoubleInteger<unsigned char>;
 template class DoubleInteger<unsigned int>;
 template class DoubleInteger<unsigned long>;

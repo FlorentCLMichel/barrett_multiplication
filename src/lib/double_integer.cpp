@@ -114,7 +114,7 @@ bool DoubleInteger<U>::operator<=(const DoubleInteger<U>& other) const {
 
 
 template<UnsignedInteger U>
-DoubleInteger<U> DoubleInteger<U>::div_by_u(U& q) const {
+DoubleInteger<U> DoubleInteger<U>::div_by_u(const U& q) const {
     const U zero = (U) 0;
     const U max_digit = ~((U) 0);
     const U one = (U) 1;
@@ -165,7 +165,7 @@ U DoubleInteger<U>::shift_right_lsb(U& n) const {
 
 
 template<UnsignedInteger U>
-DoubleInteger<U> DoubleInteger<U>::mul(U& a, U& b) {
+DoubleInteger<U> DoubleInteger<U>::mul(const U& a, const U& b) {
     const U one = 1;
     const U half_n_bits = (sizeof(U) * CHAR_BIT) >> 1;
     const U full_mask = ~((U) 0);

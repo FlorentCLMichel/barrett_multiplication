@@ -16,25 +16,40 @@ class BarrettMod {
         /// modulus
         const U q;
 
-        /// constructor
-        BarrettMod(const U q);
-
-        /** reduction modulo `q`
-         * @param x number to be reduced modulo `q`
+        /** constructor
+         * @param q modulus; must be larger than 2 and smaller than or equal to 2^{b-1}, 
+         *  where $b$ is the number of bits of the type `U`.
          */
-        U mod_red(const DoubleInteger<U>& x) const;
+        BarrettMod(const U q);
+        
+        /** reduction modulo `q` of a single-size integer
+         * @param x number to be reduced modulo `q`; must be smaller than `q*q`
+         */
+        U mod_red(const U& x) const;
+
+        /** reduction modulo `q` of a double-size integer
+         * @param x number to be reduced modulo `q`; must be smaller than `q*q`
+         */
+        U mod_red_d(const DoubleInteger<U>& x) const;
 
         /** multiplication modulo `q`
-         * @param a left input for the multiplication
-         * @param b right input for the multiplication
+         * @param a left input for the multiplication; must be smaller than `q`
+         * @param b right input for the multiplication; must be smaller than `q`
          */
         U mod_mul(const U& a, const U& b) const;
 
     private: 
 
-        const U log_2_q;
-        const U log_2_q_plus_2;
-        const U k;
+        U log_2_q;
+        U log_2_q_plus_2;
+        U k;
 };
+
+
+/// Implementations of the `BarrettMod` class for the usual types
+template class BarrettMod<unsigned char>;
+template class BarrettMod<unsigned int>;
+template class BarrettMod<unsigned long>;
+template class BarrettMod<unsigned long long>;
 
 #endif
