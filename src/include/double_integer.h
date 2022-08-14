@@ -64,6 +64,8 @@ class DoubleInteger {
 
         /**
          * @brief division by a single-size integer
+         *
+         * This function is not optimized, and assumed to be called very infrequently.
          */
         DoubleInteger<U> div_by_u(U& q) const;
 

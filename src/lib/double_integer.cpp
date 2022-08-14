@@ -114,6 +114,18 @@ U DoubleInteger<U>::sub_lsb(DoubleInteger<U>& other) const {
 
 
 template<UnsignedInteger U>
+U DoubleInteger<U>::shift_right_lsb(U& n) const {
+    if (n >= n_bits_u) {
+        return msb >> (n - n_bits_u);
+    }
+    const U rem_bits = n_bits_u - n;
+    const U mask_msb_to_lsb = (one << n) - one;
+    const U new_lsb = (lsb >> n) + ((msb & mask_msb_to_lsb) << rem_bits);
+    return new_lsb;
+}
+
+
+template<UnsignedInteger U>
 DoubleInteger<U> mul(U& a, U& b) {
     const U one = 1;
     const U half_n_bits = (sizeof(U) * CHAR_BIT) >> 1;
