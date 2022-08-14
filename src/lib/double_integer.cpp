@@ -108,6 +108,12 @@ DoubleInteger<U> DoubleInteger<U>::operator<<(const U& n) const {
 
 
 template<UnsignedInteger U>
+U DoubleInteger<U>::sub_lsb(DoubleInteger<U>& other) const {
+    return lsb - other.lsb;
+}
+
+
+template<UnsignedInteger U>
 DoubleInteger<U> mul(U& a, U& b) {
     const U one = 1;
     const U half_n_bits = (sizeof(U) * CHAR_BIT) >> 1;
