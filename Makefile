@@ -35,7 +35,7 @@ run_tests: tests
 doc:
 	doxygen doxygen_format.txt
 
-open-doc:
+open-doc: doc
 	xdg-open ./doc/html/index.html
 
 clean: 

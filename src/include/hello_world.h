@@ -6,7 +6,7 @@
  * @brief a bogus file to test documentation generation
  */
 
-#include<iostream>
+#include <iostream>
 
 /**
  * Just print "Hello World!"

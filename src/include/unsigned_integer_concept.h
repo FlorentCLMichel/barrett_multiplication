@@ -45,4 +45,9 @@ concept UnsignedInteger = requires(T a, T b) {
     { sizeof(a) } -> std::convertible_to<unsigned int>;
 } && std::convertible_to<unsigned char, T> && std::convertible_to<bool, T>;
 
+
+/// ceil of the logarithm in base 2
+template<UnsignedInteger U>
+U log_2(const U&);
+
 #endif
