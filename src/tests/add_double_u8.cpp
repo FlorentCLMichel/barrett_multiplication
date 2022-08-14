@@ -1,6 +1,6 @@
 /**
  * @file
- * @brief Test of all possible additions for DoubleInteger <unsigned char>.
+ * @brief Test of all possible additions for `DoubleInteger <unsigned char>`.
  */
 
 #include "barrett_mul.h"

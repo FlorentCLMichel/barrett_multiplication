@@ -1,6 +1,6 @@
 /**
  * @file
- * @brief Test of all possible subtractions for DoubleInteger <unsigned char>, 
+ * @brief Test of all possible subtractions for `DoubleInteger <unsigned char>`, 
  * keeping only the lsb.
  */
 

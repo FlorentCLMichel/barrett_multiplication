@@ -1,6 +1,6 @@
 /**
  * @file
- * @brief Test of all possible products of <unsigned char>.
+ * @brief Test of all possible products of `<unsigned char>`.
  */
 
 #include "barrett_mul.h"

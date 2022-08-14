@@ -112,24 +112,29 @@ bool DoubleInteger<U>::operator<=(const DoubleInteger<U>& other) const {
     return (msb < other.msb) || ((msb == other.msb) && (lsb <= other.lsb));
 }
 
-        
+
 template<UnsignedInteger U>
 DoubleInteger<U> DoubleInteger<U>::div_by_u(U& q) const {
-    U zero = 0;
-    U one = 1;
+    const U zero = (U) 0;
+    const U max_digit = ~((U) 0);
+    const U one = (U) 1;
     
     if (q == one) { return *this; }
 
     const U new_msb = msb / q;
     const U ten_over_q = 
-    ((~zero % q) != q - one) ?
-        ~zero / q
-        : (~zero / q) + one;
+    ((max_digit % q) != q - one) ?
+        max_digit / q
+        : (max_digit / q) + one;
     U new_lsb = lsb / q + (msb % q) * ten_over_q;
-    U to_add = one << ((unsigned char) (sizeof(U) * CHAR_BIT) - one);
-    U next_lsb = new_lsb + to_add;
-    while (zero < to_add) {
-        while ((new_lsb < (~zero - to_add))
+    U to_add = one << (((unsigned char) (sizeof(U) * CHAR_BIT)) - one);
+    const DoubleInteger<U> c1 = make_new(new_msb * q, zero);
+    const DoubleInteger<U> max = make_new(max_digit, max_digit);
+    while (to_add != zero) {
+        U next_lsb = new_lsb + to_add;
+        while ((new_lsb <= (max_digit - to_add)
+                && (DoubleInteger<U>::mul(next_lsb, q) <= max - c1)
+                && (DoubleInteger<U>::mul(next_lsb, q) + c1 <= *this))
             && ((DoubleInteger<U>::mul(next_lsb, q) + make_new(new_msb * q, zero)) <= *this))
         {
             new_lsb = next_lsb;

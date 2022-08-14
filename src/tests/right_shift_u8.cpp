@@ -1,6 +1,6 @@
 /**
  * @file
- * @brief Test of all possible right shifts of DoubleInteger <unsigned char>.
+ * @brief Test of all possible right shifts of `DoubleInteger <unsigned char>`.
  */
 
 #include "barrett_mul.h"

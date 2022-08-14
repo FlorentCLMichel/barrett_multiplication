@@ -1,7 +1,6 @@
 /**
  * @file
- * @brief Test of all possible right shifts of `DoubleInteger <unsigned char>`, 
- * keeping only the lsb.
+ * @brief Test of all possible divisions of `DoubleInteger <unsigned char>` by `unsigned char`.
  */
 
 #include "barrett_mul.h"
@@ -16,22 +15,25 @@ int main() {
     assert(x == 0);
 
     // run the test
-    std::cout << "Running test RIGHT_SHIFT_LSB_U8... " << std::flush;
+    std::cout << "Running test DIV_BY_U_U8... " << std::flush;
     unsigned char i = 0;
     do {
         unsigned char j = 0;
         do {
-            DoubleInteger<unsigned char> x(i, j);
+            DoubleInteger<unsigned char> x = DoubleInteger<unsigned char>::mul(i, j);
             unsigned int x_int = ((unsigned int) x.msb) * 256 + ((unsigned int) x.lsb);
-            for (unsigned char k=0; k<16; k++) {
-                unsigned char x_shifted = x.shift_right_lsb(k);
-                if (x_shifted != ((x_int >> k) & 255)) {
+            unsigned char k = 1;
+            do {
+                DoubleInteger<unsigned char> y = x.div_by_u(k);
+                unsigned int y_int = ((unsigned int) y.msb) * 256 + ((unsigned int) y.lsb);
+                if (x_int / k != y_int) {
                     std::cout << "FAILED: " 
-                              << x_int << " >> " << (unsigned int) k << " != " << (unsigned int) x_shifted
+                              << x_int << " / " << (unsigned int) k << " != " << y_int
                               << std::endl;
                     return 1;
                 }
-            }
+                ++k;
+            } while (k > 0);
             ++j;
         } while (j > 0);
         ++i;
