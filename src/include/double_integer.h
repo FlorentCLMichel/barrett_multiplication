@@ -77,12 +77,12 @@ class DoubleInteger {
         /**
          * @brief subtraction, retaining only the lsb
          */
-        U sub_lsb(DoubleInteger<U>& other) const;
+        U sub_lsb(const DoubleInteger<U>& other) const;
         
         /**
          * @right shift, retaining only the lsb
          */
-        U shift_right_lsb(U& n) const;
+        U shift_right_lsb(const U& n) const;
 
         /**
          * Generate a #DoubleInteger by multiplying two single-size integers

@@ -28,7 +28,7 @@ class BarrettMod {
         U mod_red(const U& x) const;
 
         /** reduction modulo `q` of a double-size integer
-         * @param x number to be reduced modulo `q`; must be smaller than `q*q`
+         * @param x number to be reduced modulo `q`; must be a product of two integers smaller than `q`
          */
         U mod_red_d(const DoubleInteger<U>& x) const;
 

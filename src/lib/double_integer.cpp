@@ -147,13 +147,13 @@ DoubleInteger<U> DoubleInteger<U>::div_by_u(const U& q) const {
 
 
 template<UnsignedInteger U>
-U DoubleInteger<U>::sub_lsb(DoubleInteger<U>& other) const {
+U DoubleInteger<U>::sub_lsb(const DoubleInteger<U>& other) const {
     return lsb - other.lsb;
 }
 
 
 template<UnsignedInteger U>
-U DoubleInteger<U>::shift_right_lsb(U& n) const {
+U DoubleInteger<U>::shift_right_lsb(const U& n) const {
     if (n >= n_bits_u) {
         return msb >> (n - n_bits_u);
     }

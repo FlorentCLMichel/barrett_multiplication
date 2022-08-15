@@ -1,6 +1,6 @@
 /**
  * @file
- * @brief Test of all possible modular reductions for unsigned char`.
+ * @brief Test of all possible modular reductions for `unsigned char`.
  */
 
 #include "barrett_mul.h"

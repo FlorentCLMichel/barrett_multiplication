@@ -20,3 +20,23 @@ U BarrettMod<U>::mod_red(const U& x) const {
     if (q <= c) { c -= q; }
     return q <= c ? c - q : c;
 }
+
+
+#include <iostream>
+template<UnsignedInteger U>
+U BarrettMod<U>::mod_red_d(const DoubleInteger<U>& x) const {
+    const U z = x.shift_right_lsb(log_2_q);
+    const U y = DoubleInteger<U>::mul(z, k).shift_right_lsb(log_2_q_plus_2);
+    const DoubleInteger<U> a = DoubleInteger<U>::mul(y, q);
+    U c = x.sub_lsb(a);
+    if (c >= q) { c -= q; }
+    return c >= q ? c - q : c;
+}
+        
+
+#include <iostream>
+template<UnsignedInteger U>
+U BarrettMod<U>::mod_mul(const U& a, const U& b) const {
+    DoubleInteger<U> c = DoubleInteger<U>::mul(a, b);
+    return mod_red_d(c);
+}
