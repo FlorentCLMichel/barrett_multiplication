@@ -17,7 +17,7 @@ class BarrettMod {
         const U q;
 
         /** constructor
-         * @param q modulus; must be larger than 2 and smaller than or equal to 2^{b-1}, 
+         * @param q modulus; must be larger than 2 and smaller than or equal to 2^b / 3, 
          *  where $b$ is the number of bits of the type `U`.
          */
         BarrettMod(const U q);
@@ -28,8 +28,7 @@ class BarrettMod {
         U mod_red(const U& x) const;
 
         /** reduction modulo `q` of a double-size integer
-         * @param x number to be reduced modulo `q`; must be a prduct of two integers smaller than
-         * `q` or `q` should be no larger than `2^b / 3`
+         * @param x number to be reduced modulo `q`; should be no larger than `2^b / 3`
          */
         U mod_red_d(const DoubleInteger<U>& x) const;
 
