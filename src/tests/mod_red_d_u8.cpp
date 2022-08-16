@@ -16,18 +16,18 @@ int main() {
 
     // run the test
     std::cout << "Running test MOD_RED_D_U8... " << std::flush;
-    for (unsigned char q = 3; q <= 128; q++) {
+    for (unsigned char q = 3; q <= 85; q++) {
         BarrettMod<unsigned char> barrett(q);
         unsigned int q_2 = ((unsigned int) q) * ((unsigned int) q);
         unsigned char x = 0;
         do {
             unsigned char y = 0;
             do {
-                unsigned int z_int = ((unsigned int) x) * ((unsigned int) y);
+                unsigned int z_int = 256 * ((unsigned int) x) + ((unsigned int) y);
                 if (z_int >= q_2) {
                     break;
                 }
-                DoubleInteger<unsigned char> z = DoubleInteger<unsigned char>::mul(x, y);
+                DoubleInteger<unsigned char> z = DoubleInteger<unsigned char>(x, y);
                 unsigned char z_q = barrett.mod_red_d(z);
                 unsigned int z_q_int = (unsigned int) z_q;
                 if (z_q_int != z_int % q) {
@@ -37,7 +37,7 @@ int main() {
                     return 1;
                 }
                 ++y;
-            } while (y>0);
+            } while (y > 0);
             ++x;
         } while (x > 0);
     }
