@@ -37,3 +37,17 @@ U BarrettMod<U>::mod_mul(const U& a, const U& b) const {
     DoubleInteger<U> c = DoubleInteger<U>::mul(a, b);
     return mod_red_d(c);
 }
+
+template<UnsignedInteger U>
+U BarrettMod<U>::power(const U& x, unsigned int k) const {
+    U y = (U) 1;
+    U x_pow2 = x;
+    while (k != 0) {
+        if (k & 1 != 0) {
+            y = mod_mul(y, x_pow2);
+        }
+        x_pow2 = mod_mul(x_pow2, x_pow2);
+        k >>= 1;
+    }
+    return y;
+}

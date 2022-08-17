@@ -38,6 +38,12 @@ class BarrettMod {
          */
         U mod_mul(const U& a, const U& b) const;
 
+        /** compute x to the power k and return the result modulo q
+         * @param x input
+         * @param k ewponent
+         */
+        U power(const U& x, unsigned int k) const;
+
     private: 
 
         U log_2_q;
