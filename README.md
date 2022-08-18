@@ -1,6 +1,6 @@
 # Barrett Multiplication
 
-This is a simple example of C++ code to compute the product of two integers modulo a third one. 
+This is a simple example of C++ code to compute the product of two integers modulo a third one using only ‘fast’ operations (right bit shifting, addition, subtraction, multilication, and comparison). 
 
 ## A bit of theory
 
@@ -76,8 +76,41 @@ $$
 
 So, either $c$, $c - q$, or $c - 2 q$ is in the range $[0, q)$, and thus equal to the reduction of $a \times b$ modulo $q$.
 
-Notice that this calculation involves two main operations: 
+Notice that this calculation involves three main operations: 
 
 * integer multiplications, which we perform using a partial emulation of big integers (with only two integers: one for the least significant bits and one for the most significant ones) to avoid overflow, 
 
-* divisions by powers of $2$ and rounding down, which we perform using right bit shifting.
+* divisions by powers of $2$ and rounding down, which we perform using right bit shifting, 
+
+* comparisons with $q$.
+
+## Implementation
+
+The main ingredient of this library is the `BarrettMod` class, which stores $k$, $w-1$, and $w+1$ as parameters to perform the above calculation. It has a template parameter, `U`, which must be an unsigned integer type. (The library defines an `UnsignedInteger` concept to ensure all the required operations are implemented for the type `U`.) 
+
+## Build
+
+### Requirements
+
+* Cmake version 3.22+
+ 
+* A C++20 compiler with two's complement for unsigned integers
+
+### Build commands.
+
+The Makefile provides several commands to build the project, run tests, and generate the documentation:
+
+* `make build_static` or `make`: build the static library
+* `make build_dynamic`: build the dynamic library
+* `make examples`: build the examples
+* `make tests`: build the tests
+* `make run_tests`: build and run the tests
+* `make doc`: generate the documentation (requires Doxygen)
+* `make open-doc`: open the documentation (works only on Linux with a default web browser set; on another operating system, just open the file `doc/html/index.html`)
+* `make clean`: delete the `build` and `doc` folders (only works on systems with the `rm` command)
+
+The output will be placed in the folders `build` (library and executables) and `doc` (documentation).
+
+## Use
+
+To use the library in an external program, link the latter to the static or dynamic library (or directly to the source files) and include `barrett_mut.h`.
