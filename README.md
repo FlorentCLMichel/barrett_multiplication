@@ -1,6 +1,6 @@
 # Barrett Multiplication
 
-This is a simple example of C++ code to compute the product of two integers modulo a third one using only ‘fast’ operations (right bit shifting, addition, subtraction, multilication, and comparison). 
+This is a simple example of C++ code to compute the product of two integers modulo a third one using only ‘fast’ operations (right bit shifting, addition, subtraction, multiplication, and comparison). 
 
 ## A bit of theory
 
