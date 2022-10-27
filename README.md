@@ -111,10 +111,13 @@ $$
 $$
 
 and
+
 $$
 \frac{2^{2 w}}{q} - 1 < k \leq \frac{2^{2 w}}{q},
 $$
+
 so
+
 $$
 \frac{x_1}{q} - \frac{x_1}{2^{2w}} - 1 < x_2 \leq \frac{x_1}{q},
 $$
@@ -124,6 +127,7 @@ $$
 $$
 
 Since $a, b < q \leq 2^w$, $x_1 < 2^{2w}$. So, 
+
 $$
 0 \leq x_1 - q \times x_2 < 2 q.
 $$
