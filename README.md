@@ -4,66 +4,68 @@ This is a simple example of C++ code to compute the product of two integers modu
 
 ## A bit of theory
 
+### A first scheme
+
 Let $q$ be a positive integer larger than $1$. Let $w$ be the logarithm of $q$ in base $2$, rounded up. Let $a$ and $b$ be two non-negative integers smaller than $q$. We want to compute the product of $a$ and $b$ modulo $q$, *i.e.*, the remainder of the Euclidean division of $a \times b$ by $q$.
 
-We proceeed as follows. First, we pre-compute $w$ and the integer $k$  given by $k = \lfloor 2^{2 w} / q \rfloor$. We then compute the following quantities: 
+We proceed as follows. First, we pre-compute $w$ and the integer $k$  given by $k = \lfloor 2^{2 w} / q \rfloor$. We then compute the following quantities: 
 
 $$
-    x_1 = a \times b
-$$
-
-$$
-    x_2 = \lfloor x_1 / 2^{w-1} \rfloor
+x_1 = a \times b
 $$
 
 $$
-    x_3 = \lfloor (x_2 \times k) / 2^{w+1} \rfloor
+x_2 = \lfloor x_1 / 2^{w-1} \rfloor
 $$
 
 $$
-    c = x_1 - x_3 \times q.
+x_3 = \lfloor (x_2 \times k) / 2^{w+1} \rfloor
+$$
+
+$$
+c = x_1 - x_3 \times q.
 $$
 
 Obviously, $c \equiv a \times b \; \mathrm{mod} \; q$. Moreover, we have
 
 $$
-    \frac{x_2 \times k}{2^{w+1}} - 1 < x_3 \leq \frac{x_2 \times k}{2^{w+1}}
+\frac{x_2 \times k}{2^{w+1}} - 1 < x_3 \leq \frac{x_2 \times k}{2^{w+1}}
 $$
 
 and 
 
 $$
-    \frac{a \times b}{2^{w-1}} - 1 < x_2 \leq \frac{a \times b}{2^{w-1}},
+\frac{a \times b}{2^{w-1}} - 1 < x_2 \leq \frac{a \times b}{2^{w-1}},
 $$
 
 so
 
 $$
-    \frac{a \times b \times k}{2^{2 w}} - \frac{k}{2^{w+1}} - 1 < x_3 \leq \frac{a \times b \times k}{2^{2 w}}.
+\frac{a \times b \times k}{2^{2 w}} - \frac{k}{2^{w+1}} - 1 < x_3 \leq \frac{a \times b \times k}{2^{2 w}}.
 $$
 
 Since 
 
 $$
-    \frac{2^{2 w}}{q} - 1 < k \leq \frac{2^{2 w}}{q},
+\frac{2^{2 w}}{q} - 1 < k \leq \frac{2^{2 w}}{q},
 $$
 
 this gives
 
 $$
-    \frac{a \times b}{q} - \frac{a \times b}{2^{2 w}} - \frac{2^w}{2 q} - 1 < x_3 \leq \frac{a \times b}{q}.
+\frac{a \times b}{q} - \frac{a \times b}{2^{2 w}} - \frac{2^w}{2 q} - 1 < x_3 \leq \frac{a \times b}{q}.
 $$
 
 Since $a$ and $b$ are both smaller than $2^w$, this gives
 
 $$
-    \frac{a \times b}{q} - 2 - \frac{2^w}{2 q} < x_3 \leq \frac{a \times b}{q}.
+\frac{a \times b}{q} - 2 - \frac{2^w}{2 q} < x_3 \leq \frac{a \times b}{q}.
 $$
 
 So, 
 
 $$
-    a \times b - 2 q - 2^{w-1} < q \times x_3 \leq a \times b.
+a \times b - 2 q - 2^{w-1} < q \times x_3 \leq a \times b.
 $$
 
 Since $w$ is the logarithm of $q$ in base $2$ rounded up, $2^{w-1} < q$.
@@ -71,7 +73,7 @@ Since $w$ is the logarithm of $q$ in base $2$ rounded up, $2^{w-1} < q$.
 We conclude that 
 
 $$
-    3 q > c \geq 0.
+3 q > c \geq 0.
 $$
 
 So, either $c$, $c - q$, or $c - 2 q$ is in the range $[0, q)$, and thus equal to the reduction of $a \times b$ modulo $q$.
@@ -84,6 +86,50 @@ Notice that this calculation involves three main operations:
 
 * comparisons with $q$.
 
+### Variant using larger numbers
+
+The above algorithm only involves numbers in the range $[\![0, 2^{2w}-1]\!]$. It can be simplified at the cost of intermediate results only being constrained to the larger range $[\![0, 2^{3w}-1]\!]$ as follows. 
+
+Let us compute the following quantities: 
+
+$$
+x_1 = a \times b
+$$
+
+$$
+x_2 = \lfloor (x_1 \times k) / 2^{2w} \rfloor
+$$
+
+$$
+c = x_1 - x_2 \times q.
+$$
+
+Obviously, $c \equiv a \times b \; \mathrm{mod} \; q$. Moreover, we have
+
+$$
+\frac{x_1 \times k}{2^{2w}} - 1 < x_2 \leq \frac{x_1 \times k}{2^{2w}}
+$$
+
+and
+$$
+\frac{2^{2 w}}{q} - 1 < k \leq \frac{2^{2 w}}{q},
+$$
+so
+$$
+\frac{x_1}{q} - \frac{x_1}{2^{2w}} - 1 < x_2 \leq \frac{x_1}{q},
+$$
+
+$$
+\frac{x_1 \times q}{2^{2w}} + q > x_1 - q \times x_2 \geq 0.
+$$
+
+Since $a, b < q \leq 2^w$, $x_1 < 2^{2w}$. So, 
+$$
+0 \leq x_1 - q \times x_2 < 2 q.
+$$
+
+So, either $c$, or $c - q$ is in the range $[0, q)$, and thus equal to the reduction of $a \times b$ modulo $q$.
+
 ## Implementation
 
 The main ingredient of this library is the `BarrettMod` class, which stores $k$, $w-1$, and $w+1$ as parameters to perform the above calculation. It has a template parameter, `U`, which must be an unsigned integer type. (The library defines an `UnsignedInteger` concept to ensure all the required operations are implemented for the type `U`.) 
@@ -93,7 +139,7 @@ The main ingredient of this library is the `BarrettMod` class, which stores $k$,
 ### Requirements
 
 * Cmake version 3.22+
- 
+
 * A C++20 compiler with two's complement for unsigned integers
 
 ### Build commands.
