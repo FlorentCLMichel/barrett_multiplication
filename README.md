@@ -141,6 +141,10 @@ $$
 $$
 If $z < 2^{w'}$, $z$ satisfies the desired properties, and thus so does $y$ (since $y = z$ in this case). Otherwise, $z > q$ and $y = z - q$, so $y > 0$, and, from the second inequality above, $y < 2^{w'}$. the integer $y$ thus still satisfies the desired properties. $\square$
 
+
+
+**NB:** Notice that this scheme is optimal, in the sense that we can't (in general) choose $w' = w$. As a counter-example, let us choose $q = 113$ and $x = 11772$. We then have $x = a \times b$ with $a = 108$ and $b = 109$. Then, $w = 7$ and $2^w = 128$. So, $a < 2^w$ and $b < 2^w$ (so $x < 2^{2w}$). We have $k = \lfloor 128^2 / q \rfloor = 144$. Let us try  to follow the above procedure with $w' = w$. then, $x_2 = \lfloor 11772 / 2^6 \rfloor = \lfloor 11772 / 64 \rfloor = 183$ and $x_3 = \lfloor (183 \times 144 ) / 2^8 \rfloor = \lfloor (183 \times 144 ) / 2^8 \rfloor = 102$. So, $z = 11772 - 113 \times 102 = 246 = 2^w +q + 5$. We thus get $z > 2^w + q$, so neither $z$ nor $z-q$ is in the range $[\![0, 2^w]\!]$.
+
 ### A variant using larger numbers
 
 The above algorithm only involves numbers in the range $[\![0, 2^{2w}-1]\!]$. It can be simplified at the cost of intermediate results only being constrained to the larger range $[\![0, 2^{3w}-1]\!]$ as follows. 
