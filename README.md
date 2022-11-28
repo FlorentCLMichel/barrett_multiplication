@@ -6,7 +6,7 @@ This is a simple example of C++ code to compute the product of two integers modu
 
 ### A first scheme
 
-Let $q$ be a positive integer larger than $1$. Let $w$ be the logarithm of $q$ in base $2$, rounded up. Let $a$ and $b$ be two non-negative integers smaller than $q$. We want to compute the product of $a$ and $b$ modulo $q$, *i.e.*, the remainder of the Euclidean division of $a \times b$ by $q$.
+Let $q$ be a positive integer larger than $1$. Let $w$ be the logarithm of $q$ in base $2$, rounded up. Let $a$ and $b$ be two non-negative integers smaller than $2^w$. We want to compute the product of $a$ and $b$ modulo $q$, *i.e.*, the remainder of the Euclidean division of $a \times b$ by $q$.
 
 We proceed as follows. First, we pre-compute $w$ and the integer $k$  given by $k = \lfloor 2^{2 w} / q \rfloor$. We then compute the following quantities: 
 
@@ -86,7 +86,62 @@ Notice that this calculation involves three main operations:
 
 * comparisons with $q$.
 
-### Variant using larger numbers
+**NB:** This argument still works with $a \times b$ replaced by any non-negative integer smaller than $2^{2w}$. 
+
+### A variant
+
+If the point of the modular reduction is to prevent the range from growing indefinitely when doing successive calculations, one can do one fewer comparison at the cost of a larger exponent. Let $w'$ be an integer strictly leather than $w$ and $k' = \lfloor 2^{2w'} / q \rfloor$. Let $x$ be a natural integer no larger than $2^{w'}$. We want to find an integer $y$ such that $y \equiv x \; \mathrm{mod} \; q$ and $0 \leq y < 2^{w'}$. 
+
+Let $x_2 = \lfloor x / 2^{w'-1} \rfloor$ and $x_3 = \lfloor (x_2 \times k' ) / 2^{w'+1} \rfloor$.
+Let $z = x - q \times x_3$ and $y = z$ if $z < 2^w$ or $y = z - q$ otherwise. We claim that $y$ satisfies the above properties. 
+
+**Proof:** First note that $z \equiv x \; \mathrm{mod} \; q$ and $y \equiv x \; \mathrm{mod} \; q$ by construction. Let us show that $y$ is in the right range. 
+
+We have: 
+$$
+\frac{x_2 \times k'}{2^{w'+1}} - 1 
+< x_3 
+\leq \frac{x_2 \times k'}{2^{w'+1}} ,
+$$
+
+$$
+\frac{x}{2^{w'-1}} - 1
+< x_2
+\leq \frac{x}{2^{w'-1}},
+$$
+
+and
+$$
+\frac{2^{2 w'}}{q} - 1
+< k'
+\leq \frac{2^{2 w'}}{q}.
+$$
+So, 
+$$
+\frac{x}{q} - \frac{2^{w'-1}}{q} - \frac{x}{2^{2 w'}} + \frac{1}{2^{w'+1}} - 1
+< x_3
+\leq \frac{x}{q} .
+$$
+From this double inequality, we immediately get:
+$$
+0 \leq 
+x - q \times x_3
+< 2^{w'-1} + \frac{x \times q}{2^{2 w'}} + q - \frac{q}{2^{w'+1}}.
+$$
+Since $x \leq 2^{2 w'}$,  this gives:
+$$
+0 \leq 
+z
+< 2^{w'-1} + 2 \times q .
+$$
+Since $w' > w$, $w' \geq w+1$; since $q \leq 2^w$, we thus have $q \leq 2^{w'-1}$. the above double inequality thus gives: 
+$$
+0 \leq z
+< 2^{w'} + q.
+$$
+If $z < 2^{w'}$, $z$ satisfies the desired properties, and thus so does $y$ (since $y = z$ in this case). Otherwise, $z > q$ and $y = z - q$, so $y > 0$, and, from the second inequality above, $y < 2^{w'}$. the integer $y$ thus still satisfies the desired properties. $\square$
+
+### A variant using larger numbers
 
 The above algorithm only involves numbers in the range $[\![0, 2^{2w}-1]\!]$. It can be simplified at the cost of intermediate results only being constrained to the larger range $[\![0, 2^{3w}-1]\!]$ as follows. 
 
