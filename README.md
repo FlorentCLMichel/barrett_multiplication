@@ -90,7 +90,7 @@ Notice that this calculation involves three main operations:
 
 ### A variant
 
-If the point of the modular reduction is to prevent the range from growing indefinitely when doing successive calculations, one can do one fewer comparison at the cost of a larger exponent. Let $w'$ be an integer strictly leather than $w$ and $k' = \lfloor 2^{2w'} / q \rfloor$. Let $x$ be a natural integer no larger than $2^{w'}$. We want to find an integer $y$ such that $y \equiv x \; \mathrm{mod} \; q$ and $0 \leq y < 2^{w'}$. 
+If the point of the modular reduction is to prevent the range from growing indefinitely when doing successive calculations, one can do one fewer comparison at the cost of a larger exponent. Let $w'$ be an integer strictly larger than $w$ and $k' = \lfloor 2^{2w'} / q \rfloor$. Let $x$ be a natural integer no larger than $2^{w'}$. We want to find an integer $y$ such that $y \equiv x \; \mathrm{mod} \; q$ and $0 \leq y < 2^{w'}$. 
 
 Let $x_2 = \lfloor x / 2^{w'-1} \rfloor$ and $x_3 = \lfloor (x_2 \times k' ) / 2^{w'+1} \rfloor$.
 Let $z = x - q \times x_3$ and $y = z$ if $z < 2^w$ or $y = z - q$ otherwise. We claim that $y$ satisfies the above properties. 
