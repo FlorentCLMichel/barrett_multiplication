@@ -193,6 +193,52 @@ $$
 
 So, either $c$, or $c - q$ is in the range $[0, q)$, and thus equal to the reduction of $a \times b$ modulo $q$.
 
+### An alternative: Shoup multiplication
+
+**Problem:** Let $q$ be a positive integer and $w$ a fixed integer in $[\![0, q[\![$. Let $f$ be the function from $[\![0, q[\![$ to itself defined by: for each element $x$ of $[\![0, q[\![$, $f(x) = (w \times x) \; \mathrm{mod} \; q$. 
+
+**Claim:** Let $\beta$ be a positive integer such that $\beta \geq q$. (One generally chooses $\alpha$ as a power of $2$ for performance.) We define $w'$ by: $w' = \lfloor w \beta  / q \rfloor$. For each element $x$ of $\mathbb{N}$, we define $g(x)$ by:
+$$
+g(x) = w \, x - \left\lfloor \frac{w' \, x}{\beta} \right\rfloor q .
+$$
+Then, for each positive integer $x$ strictly smaller than $q$, $f(x) = g(x)$ si $g(x) < q$ or $f(x) = g(x) - q$ otherwise.
+
+Moreover, if $\beta \geq 2 q$, then $g(x) < 2 q$ for all $x$ in $[\![0, 2 q]\!]$.
+
+If $\beta$ is a power of $2$, this calculation require one integer multiplication, one bit shift, one comparison, and one or two subtractions. It may be more efficient than Barrett reduction if $w'$ is pre-computed.
+
+**Proof:** By construction, the result is equal to $w \, x$ modulo $q$. Let us show that it is in the right range.
+
+We have: 
+$$
+\frac{w' \, x}{\beta} q - q < \left\lfloor \frac{w' \, x}{\beta} \right\rfloor q \leq \frac{w' \, x}{\beta} q.
+$$
+Since 
+$$
+\frac{w \, \beta}{q} - 1 < w' \leq \frac{w \, \beta}{q},
+$$
+this gives: 
+$$
+w \, x - \frac{x}{\beta} q - q < \left\lfloor \frac{w' \, x}{\beta} \right\rfloor q \leq w \, x.
+$$
+If $x < q$, and $q < \beta$, $x < \beta$, so 
+$$
+w \, x - 2 \, q < \left\lfloor \frac{w' \, x}{\beta} \right\rfloor q \leq w \, x
+$$
+and
+$$
+0 \leq g(x) < 2 \, q.
+$$
+If $x \leq 2 \, q$ and $\beta \geq 2 q$, we have $x \leq \beta$, so 
+$$
+w \, x - 2 \, q < \left\lfloor \frac{w' \, x}{\beta} \right\rfloor q \leq w \, x
+$$
+again, and
+$$
+0 \leq g(x) < 2 \, q.
+$$
+
+
 ## Implementation
 
 The main ingredient of this library is the `BarrettMod` class, which stores $k$, $w-1$, and $w+1$ as parameters to perform the above calculation. It has a template parameter, `U`, which must be an unsigned integer type. (The library defines an `UnsignedInteger` concept to ensure all the required operations are implemented for the type `U`.) 
