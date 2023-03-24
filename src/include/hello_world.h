@@ -1,5 +1,5 @@
-#ifndef __BOGUS_H_
-#define __BOGUS_H_
+#ifndef BOGUS_H
+#define BOGUS_H
 
 /**
  * @file

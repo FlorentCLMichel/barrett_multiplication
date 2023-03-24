@@ -1,5 +1,5 @@
-#ifndef __BARRETT_CLASS_H_
-#define __BARRETT_CLASS_H_
+#ifndef BARRETT_CLASS_H
+#define BARRETT_CLASS_H
 
 /**
  * @file

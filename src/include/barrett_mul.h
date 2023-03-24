@@ -17,8 +17,8 @@
  */
 
 
-#ifndef __BARRETT_MUL_H_
-#define __BARRETT_MUL_H_
+#ifndef BARRETT_MUL_H
+#define BARRETT_MUL_H
 
 /**
  * @file
@@ -29,5 +29,6 @@
 #include "unsigned_integer_concept.h"
 #include "double_integer.h"
 #include "barrett_class.h"
+#include "shoup_mul.h"
 
 #endif

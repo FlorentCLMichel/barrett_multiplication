@@ -1,5 +1,5 @@
-#ifndef __DOUBLE_INTEGER_H_
-#define __DOUBLE_INTEGER_H_
+#ifndef DOUBLE_INTEGER_H
+#define DOUBLE_INTEGER_H
 
 /**
  * @file
