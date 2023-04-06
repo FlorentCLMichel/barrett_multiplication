@@ -197,11 +197,11 @@ So, either $c$, or $c - q$ is in the range $[0, q)$, and thus equal to the reduc
 
 **Problem:** Let $q$ be a positive integer and $w$ a fixed integer in $[\![0, q[\![$. Let $f$ be the function from $[\![0, q[\![$ to itself defined by: for each element $x$ of $[\![0, q[\![$, $f(x) = (w \times x) \; \mathrm{mod} \; q$. 
 
-**Claim:** Let $\beta$ be a positive integer such that $\beta \geq q$. (One generally chooses $\alpha$ as a power of $2$ for performance.) We define $w'$ by: $w' = \lfloor w \beta  / q \rfloor$. For each element $x$ of $\mathbb{N}$, we define $g(x)$ by:
+**Claim:** Let $\beta$ be a positive integer such that $\beta \geq q$. (One generally chooses $\beta$ as a power of $2$ for performance.) We define $w'$ by: $w' = \lfloor w \beta  / q \rfloor$. For each element $x$ of $\mathbb{N}$, we define $g(x)$ by:
 $$
 g(x) = w \, x - \left\lfloor \frac{w' \, x}{\beta} \right\rfloor q .
 $$
-Then, for each positive integer $x$ strictly smaller than $q$, $f(x) = g(x)$ si $g(x) < q$ or $f(x) = g(x) - q$ otherwise.
+Then, for each positive integer $x$ strictly smaller than $q$, $f(x) = g(x)$ if $g(x) < q$ or $f(x) = g(x) - q$ otherwise.
 
 Moreover, if $\beta \geq 2 q$, then $g(x) < 2 q$ for all $x$ in $[\![0, 2 q]\!]$.
 
